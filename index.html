@@ -1,8 +1,53 @@
 <html>
   <head>
     <title>Sloth Day</title>
+    <style>
+      .message {
+        font-family: Georgia, Serif;
+        font-size: 72px;
+        margin-top: 15%;
+        margin-left: 10%;
+        margin-right: 10%;
+        text-align: center;
+      }
+    </style>
+    <script>
+      var end = new Date('04/19/2014 00:00 AM');
+
+      var _second = 1000;
+      var _minute = _second * 60;
+      var _hour = _minute * 60;
+      var _day = _hour * 24;
+      var timer;
+
+      function showRemaining() {
+        var now = new Date();
+        var distance = end - now;
+        if (distance < 0) {
+
+          clearInterval(timer);
+          document.getElementById('countdown').innerHTML = 'EXPIRED!';
+
+          return;
+        }
+        var days = Math.floor(distance / _day);
+        var hours = Math.floor((distance % _day) / _hour);
+        var minutes = Math.floor((distance % _hour) / _minute);
+        var seconds = Math.floor((distance % _minute) / _second);
+
+        document.getElementById('countdown').innerHTML = days + ' days<br/>';
+        document.getElementById('countdown').innerHTML += hours + ' hours<br/>';
+        document.getElementById('countdown').innerHTML += minutes + ' minutes<br/>';
+        document.getElementById('countdown').innerHTML += seconds + ' seconds<br/>';
+      }
+
+      timer = setInterval(showRemaining, 1000);
+    </script>
   </head>
   <body>
-    Sloth Day!
+    <div class="message">
+      Sloth Day countdown:
+    <div id="countdown"></div>
+  </div>
   </body>
 </html>
