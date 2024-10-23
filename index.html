@@ -1,54 +1,144 @@
-<html>
-  <head>
-    <title>Sloth Day</title>
-    <style>
-      .message {
-        font-family: Georgia, Serif;
-        font-size: 72px;
-        margin-top: 15%;
-        margin-left: 10%;
-        margin-right: 10%;
-        text-align: center;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🦥 Sloth Day 🦥</title>
+  <style>
+    body {
+      font-family: Georgia, Serif;
+      display: block;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    header, section, footer {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #333;
+    }
+
+    .timer, .holiday-message, .passed-message, .eve-message {
+      display: none;
+      font-size: 2rem;
+      margin: 20px 0;
+    }
+
+    .visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <!-- Timer content -->
+    <div id="timer" class="timer visible">
+      <h1>Count down to Sloth Day!</h1>
+      <p id="countdownText">0d 0h 0m 0s</p>
+    </div>
+
+    <!-- Sloth day's Eve message on the eve of the holiday -->
+    <div id="eveMessage" class="eve-message">
+      <h1>Happy Sloth Day's Eve! Make sure you're making the necessary preparations for sloth day tomorrow!</h1>
+    </div>
+
+    <!-- Today is sloth day! -->
+    <div id="holidayMessage" class="holiday-message">
+      <h1>Happy Sloth Day! 🎉</h1>
+    </div>
+
+    <!-- Sloth day just passed -->
+    <div id="passedMessage" class="passed-message">
+      <h1>Sloth Day just passed! See you next year!</h1>
+    </div>
+
+  </header>
+
+  <section>
+    <p>TODO: Explain what sloth day is....</p>
+  </section>
+
+  <footer>
+    This is the footer!
+  </footer>
+
+  <script>
+    function getThirdSundayOfApril(year) {
+      let date = new Date(year, 3, 1); // April 1st
+      let dayOfWeek = date.getDay();
+      let daysToFirstSunday = (7 - dayOfWeek) % 7;
+      let thirdSunday = daysToFirstSunday + 14;
+      date.setDate(thirdSunday);
+      return date;
+    }
+
+    function startCountdown() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const slothDay = getThirdSundayOfApril(year);
+      const nextYearSlothDay = getThirdSundayOfApril(year + 1);
+
+      const timer = document.getElementById('timer');
+      const countdownText = document.getElementById('countdownText');
+      const eveMessage = document.getElementById('eveMessage');
+      const holidayMessage = document.getElementById('holidayMessage');
+      const passedMessage = document.getElementById('passedMessage');
+
+      // Check if today is Sloth Day's eve
+      if (now.getMonth() == slothDay.getMonth() && now.getDate() == (slothDay.getDate() - 1)) {
+        eveMessage.classList.add('visible');
       }
-    </style>
-    <script>
-      var end = new Date('04/19/2014 00:00 AM');
 
-      var _second = 1000;
-      var _minute = _second * 60;
-      var _hour = _minute * 60;
-      var _day = _hour * 24;
-      var timer;
+      // Check if today is Sloth Day
+      if (now.toDateString() === slothDay.toDateString()) {
+        timer.classList.remove('visible');
+        holidayMessage.classList.add('visible');
+        return;
+      }
 
-      function showRemaining() {
-        var now = new Date();
-        var distance = end - now;
-        if (distance < 0) {
+      // Check if Sloth Day has already passed this year but we are still in April
+      if (now > slothDay && now.getMonth() === slothDay.getMonth()) {
+        timer.classList.remove('visible');
+        passedMessage.classList.add('visible');
+        return;
+      }
 
-          clearInterval(timer);
-          document.getElementById('countdown').innerHTML = 'EXPIRED!';
+      // Calculate countdown target
+      let targetDate = now < slothDay ? slothDay : nextYearSlothDay;
 
+      function updateCountdown() {
+        const now = new Date();
+        const timeDifference = targetDate - now;
+
+        if (timeDifference <= 0) {
+          clearInterval(interval);
+          timer.classList.remove('visible');
+          holidayMessage.classList.add('visible');
           return;
         }
-        var days = Math.floor(distance / _day);
-        var hours = Math.floor((distance % _day) / _hour);
-        var minutes = Math.floor((distance % _hour) / _minute);
-        var seconds = Math.floor((distance % _minute) / _second);
 
-        document.getElementById('countdown').innerHTML = days + ' days<br/>';
-        document.getElementById('countdown').innerHTML += hours + ' hours<br/>';
-        document.getElementById('countdown').innerHTML += minutes + ' minutes<br/>';
-        document.getElementById('countdown').innerHTML += seconds + ' seconds<br/>';
+        const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+        countdownText.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
       }
 
-      //timer = setInterval(showRemaining, 1000);
-    </script>
-  </head>
-  <body>
-    <div class="message">
-      Sloth day has been postponed indefinitely until further notice.  In the mean time, please take a nap for us.
-    <!--  Sloth Day countdown:
-    <div id="countdown"></div> -->
-  </div>
-  </body>
+      // Update countdown every second
+      updateCountdown();
+      let interval = setInterval(updateCountdown, 1000);
+    }
+
+    // Start the countdown when the page loads
+    startCountdown();
+  </script>
+
+</body>
 </html>
