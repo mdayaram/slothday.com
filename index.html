@@ -21,6 +21,22 @@
       text-align: center;
     }
 
+    footer {
+      padding-top: 50px;
+      padding-bottom: 20px;
+      color: #555;
+      font-size: 0.75rem;
+    }
+
+    section {
+      width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    section > div {
+      text-align: left;
+    }
+
     h1 {
       font-size: 2.5rem;
       color: #333;
@@ -53,7 +69,7 @@
 
     <!-- Today is sloth day! -->
     <div id="holidayMessage" class="holiday-message">
-      <h1>Happy Sloth Day! 🎉</h1>
+      <h1>Happy Sloth Day! 🦥</h1>
     </div>
 
     <!-- Sloth day just passed -->
@@ -64,11 +80,67 @@
   </header>
 
   <section>
-    <p>TODO: Explain what sloth day is....</p>
+    <div>
+      <h2>What is sloth day?</h2>
+      <p>
+        Sloth day is a holiday for us. Not for your mother, father, loved one, some diety, a
+        tradition, culture, historical event, or anyone else! It's a holiday for you, and for me, and
+        for everyone, to celebrate themselves, completely disconnect from the world, and do absolutely
+        nothing productive and just allow yourself to be.
+      </p>
+    </div>
+    <div>
+      <h2>When is sloth day?</h2>
+      <p>
+        Sloth falls on the third Sunday of April every year. To find out when it falls this current
+        year, simply scroll up to the countdown on this page.
+      </p>
+    </div>
+    <div>
+      <h2>How do you celebrate sloth day?</h2>
+      <p>
+        It's easy! You simply chill, disconnect, and don't do work! But you must be careful. Do not
+        engage in any activity that would ask of someone else to relinquish their sloth day. That
+        means that ordering food or take out, going to restaurants, shops, or any other activity
+        where you would interact with someone who works! Sloth day is an equal opportunity holiday,
+        and so your activities should not depend on someone being forced to work during this wondorous
+        holiday, lest you steal their chance to celebrate as well.
+      </p>
+    </div>
+    <div>
+      <h2>But how am I gonna sloth without food or entertainment?!</h2>
+      <p>
+        Ah, not to worry my friend, why that's the point of Sloth Day's Eve!
+      </p>
+    </div>
+    <div>
+      <h2>What's sloth day's eve?</h2>
+      <p>
+        We understand that we live in a capitalist society, and thus, the chance for an 
+        anti-capitalist holiday succeeding would be slim to none. Luckily, Sloth Day is no single
+        holiday, but comes paired with the wonderful Sloth Day's Eve! On the day before sloth day,
+        you venture out into the world in order to stock up on everything that you may need
+        to celebrate a successful sloth day without ever bothering someone the day of! Order
+        all the food, rent, buy, or download those movies, books, or games (streaming service
+        are not allowed during sloth day!), get those comfy pajamas, and maybe even a sloth hat to
+        get into the spirit! Flex that capitalism muscle and acquire everything and anything you
+        may need to celebrate a truly disconnected sloth day!
+      </p>
+    </div>
+    <div>
+      <h2>Who created sloth day?</h2>
+      <p>
+        Sloth day was created by <a href="https://noj.cc">Manoj</a> and Lillian Kwok one day
+        when they got super bored while eating McDonald's 20pc nuggets for the amazing deal of $4
+        back in 2014 when they were both unemployed, thus exemplefying the true meaning of sloth.
+        They've been celebrating sloth day personally every year since, and have now decided to share
+        this holiday with the world!
+      </p>
+    </div>
   </section>
 
   <footer>
-    This is the footer!
+    Copyright &copy; 2014 🦥
   </footer>
 
   <script>
@@ -113,11 +185,11 @@
       }
 
       // Calculate countdown target
-      let targetDate = now < slothDay ? slothDay : nextYearSlothDay;
+      let comingSlothDay = now < slothDay ? slothDay : nextYearSlothDay;
 
       function updateCountdown() {
         const now = new Date();
-        const timeDifference = targetDate - now;
+        const timeDifference = comingSlothDay - now;
 
         if (timeDifference <= 0) {
           clearInterval(interval);
