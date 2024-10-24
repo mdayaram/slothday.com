@@ -187,8 +187,12 @@
       return date;
     }
 
+    function currentDate() {
+      return new Date();
+    }
+
     function startCountdown() {
-      const now = new Date();
+      const now = currentDate();
       const year = now.getFullYear();
       const slothDay = getThirdSundayOfApril(year);
       const nextYearSlothDay = getThirdSundayOfApril(year + 1);
@@ -225,7 +229,7 @@
 
 
       function updateCountdown() {
-        const now = new Date();
+        const now = currentDate();
         const timeDifference = comingSlothDay - now;
 
         if (timeDifference <= 0) {
