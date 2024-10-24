@@ -48,6 +48,12 @@
       margin: 20px 0;
     }
 
+    #countdownText {
+      font-family: Roboto, sans-serif;
+      background-color: black;
+      color: white;
+    }
+
     .visible {
       display: block;
     }
@@ -60,6 +66,7 @@
     <div id="timer" class="timer visible">
       <h1>Count down to Sloth Day!</h1>
       <p id="countdownText">0d 0h 0m 0s</p>
+      <p id="countdownDate">Until...</p>
     </div>
 
     <!-- Sloth day's Eve message on the eve of the holiday -->
@@ -147,8 +154,8 @@
     function getThirdSundayOfApril(year) {
       let date = new Date(year, 3, 1); // April 1st
       let dayOfWeek = date.getDay();
-      let daysToFirstSunday = (7 - dayOfWeek) % 7;
-      let thirdSunday = daysToFirstSunday + 14;
+      let daysToFirstSunday = (7 - dayOfWeek + 1) % 7; // Correct days to first Sunday
+      let thirdSunday = daysToFirstSunday + 14;    // Add 14 days to reach the third Sunday
       date.setDate(thirdSunday);
       return date;
     }
@@ -158,12 +165,17 @@
       const year = now.getFullYear();
       const slothDay = getThirdSundayOfApril(year);
       const nextYearSlothDay = getThirdSundayOfApril(year + 1);
+      let comingSlothDay = now < slothDay ? slothDay : nextYearSlothDay;
 
       const timer = document.getElementById('timer');
       const countdownText = document.getElementById('countdownText');
+      const countdownDate = document.getElementById('countdownDate');
       const eveMessage = document.getElementById('eveMessage');
       const holidayMessage = document.getElementById('holidayMessage');
       const passedMessage = document.getElementById('passedMessage');
+
+      // Add the date to the countdown
+      countdownDate.textContent = "until " + comingSlothDay.toLocaleDateString();
 
       // Check if today is Sloth Day's eve
       if (now.getMonth() == slothDay.getMonth() && now.getDate() == (slothDay.getDate() - 1)) {
@@ -184,8 +196,6 @@
         return;
       }
 
-      // Calculate countdown target
-      let comingSlothDay = now < slothDay ? slothDay : nextYearSlothDay;
 
       function updateCountdown() {
         const now = new Date();
@@ -203,7 +213,7 @@
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-        countdownText.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        countdownText.textContent = `${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`;
       }
 
       // Update countdown every second
